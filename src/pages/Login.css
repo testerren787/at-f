@@ -1,0 +1,647 @@
+/* Main Container */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+/* ==================== HEADER SECTION ==================== */
+.login-header {
+  padding: 3rem 1rem 2rem;
+  text-align: center;
+  background: #143676;
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-large {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.airteltigo-logo-large {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.airteltigo-circle-large {
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.airteltigo-a-large {
+  color: #143676;
+  font-size: 3.5rem;
+  font-weight: 700;
+  font-family: Arial, sans-serif;
+}
+
+.logo-large-airteltigo {
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.logo-subtitle {
+  color: #D3DFF5;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+}
+
+/* ==================== LOGIN FORM SECTION ==================== */
+.login-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+
+.login-title {
+  font-size: 1.5rem;
+  color: #666;
+  margin-bottom: 2.5rem;
+  font-weight: 500;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* ==================== STEP INDICATOR ==================== */
+.step-indicator {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.step-indicator strong {
+  color: #143676;
+}
+
+/* ==================== OTP SENT MESSAGE ==================== */
+.otp-sent-message {
+  background: linear-gradient(135deg, #D3DFF5 0%, #E8EFFD 100%);
+  border: 2px solid #143676;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(20, 54, 118, 0.15);
+}
+
+.otp-sent-text {
+  color: #333;
+  font-size: 0.95rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.otp-sent-text strong {
+  color: #143676;
+  font-weight: 700;
+}
+
+/* ==================== SERVER STATUS MESSAGES ==================== */
+.server-status-message {
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 14px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.server-status-message.checking {
+  background-color: #e3f2fd;
+  color: #1565c0;
+  border: 1px solid #90caf9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.server-status-message.error {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+.status-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #1565c0;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.status-subtext {
+  font-size: 12px;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* ==================== PHONE INPUT ==================== */
+.phone-input-container {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.phone-input-no-prefix {
+  width: 100%;
+  padding: 1rem 1rem;
+  border: 2px solid #143676;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.phone-input-no-prefix:focus {
+  outline: none;
+  border-color: #0d1f3c;
+  box-shadow: 0 0 0 3px rgba(20, 54, 118, 0.1);
+}
+
+.phone-input-no-prefix:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+}
+
+/* ==================== OTP INPUT ==================== */
+.otp-input-container {
+  margin-bottom: 1.5rem;
+}
+
+.otp-label {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  display: block;
+}
+
+.otp-inputs-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.otp-box {
+  width: 50px;
+  height: 55px;
+  border: 2px solid #143676;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.otp-box:focus {
+  outline: none;
+  border-color: #0d1f3c;
+  box-shadow: 0 0 0 3px rgba(20, 54, 118, 0.1);
+}
+
+.otp-box:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ==================== PIN INPUT (NEW: Text Box Style) ==================== */
+.pin-section-login {
+  margin-bottom: 1.5rem;
+}
+
+.pin-label-login {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pin-input-wrapper-login {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.pin-input-login {
+  flex: 1;
+  padding: 1rem;
+  border: 2px solid #143676;
+  border-radius: 8px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  text-align: center;
+  letter-spacing: 0.2rem;
+}
+
+.pin-input-login[type="password"] {
+  font-size: 2rem;
+  letter-spacing: 0.5rem;
+}
+
+.pin-input-login:focus {
+  outline: none;
+  border-color: #0d1f3c;
+  box-shadow: 0 0 0 3px rgba(20, 54, 118, 0.1);
+}
+
+.pin-input-login:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.pin-hint {
+  font-size: 0.8rem;
+  color: #888;
+  margin: 0.5rem 0 0 0;
+  font-weight: 400;
+}
+
+.eye-button-login {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.3rem;
+  padding: 0.8rem 0.4rem;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+
+.eye-button-login:hover:not(:disabled) {
+  opacity: 0.7;
+}
+
+.eye-button-login:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ==================== LOGIN BUTTON ==================== */
+.login-button {
+  width: 100%;
+  padding: 1rem;
+  background: #143676;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  margin-top: 1.5rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(20, 54, 118, 0.3);
+}
+
+.login-button:hover:not(:disabled) {
+  background: #0d1f3c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(20, 54, 118, 0.4);
+}
+
+.login-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.6;
+  box-shadow: none;
+}
+
+/* ==================== FOOTER SECTION ==================== */
+.login-footer {
+  background: #143676;
+  padding: 4rem 1rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.wave-decoration {
+  position: absolute;
+  top: -50px;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: white;
+  border-radius: 0 0 50% 50%;
+}
+
+.footer-content {
+  position: relative;
+  z-index: 1;
+}
+
+.footer-logo {
+  margin-bottom: 2rem;
+}
+
+.footer-logo-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.footer-airteltigo-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-airteltigo-circle {
+  width: 60px;
+  height: 60px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.footer-airteltigo-a {
+  color: #143676;
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-family: Arial, sans-serif;
+}
+
+.footer-logo-airteltigo {
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.footer-logo-subtitle {
+  color: #D3DFF5;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+  letter-spacing: 0.1em;
+  font-weight: 300;
+}
+
+.footer-text {
+  color: white;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.footer-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: white;
+  color: #143676;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.footer-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.version-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.terms-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.8rem;
+}
+
+.terms-link {
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.terms-link:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ==================== PROCESSING MODAL ==================== */
+.processing-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.processing-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 90%;
+  padding: 3rem 2.5rem;
+  text-align: center;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.airteltigo-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #143676;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.processing-title {
+  font-size: 1.75rem;
+  color: #143676;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.processing-subtitle {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+/* ==================== ERROR MODAL ==================== */
+.error-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.error-modal-content {
+  background: white;
+  border-radius: 20px;
+  padding: 40px 30px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.error-modal-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  animation: bounce 0.5s ease-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+.error-modal-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #d32f2f;
+  margin-bottom: 15px;
+}
+
+.error-modal-message {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.error-modal-button {
+  background: #143676;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 40px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(20, 54, 118, 0.3);
+}
+
+.error-modal-button:hover {
+  background: #0d1f3c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(20, 54, 118, 0.4);
+}
+
+.error-modal-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(20, 54, 118, 0.3);
+}
+
+/* ==================== MOBILE RESPONSIVE ==================== */
+@media (max-width: 600px) {
+  .logo-large-airteltigo  { font-size: 2.5rem; }
+  .airteltigo-circle-large { width: 70px; height: 70px; }
+  .airteltigo-a-large     { font-size: 3rem; }
+  .logo-subtitle       { font-size: 0.9rem; }
+  .login-title         { font-size: 1.3rem; }
+  .footer-logo-text    { font-size: 2rem; }
+  .footer-airteltigo-circle { width: 50px; height: 50px; }
+  .footer-airteltigo-a    { font-size: 2rem; }
+  .footer-logo-subtitle { font-size: 0.85rem; }
+  .footer-buttons      { flex-direction: column; align-items: stretch; }
+  .server-status-message { font-size: 13px; padding: 12px; }
+  .otp-box       { width: 45px; height: 50px; font-size: 1.3rem; }
+  .pin-input-login { font-size: 1.1rem; }
+  .pin-inputs-login    { gap: 0.5rem; }
+  .otp-sent-message { padding: 0.75rem 1rem; }
+  .otp-sent-text { font-size: 0.9rem; }
+}

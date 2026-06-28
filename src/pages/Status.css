@@ -1,0 +1,917 @@
+/* ==================== BASE CONTAINER ==================== */
+.status-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #143676 0%, #0F2854 100%);
+  padding: 2rem 1rem;
+}
+
+.status-content {
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ==================== SUCCESS CARD (Main Status Page) ==================== */
+.success-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  padding: 3rem 2.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.success-icon-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #143676 0%, #0F2854 100%);
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 20px rgba(20, 54, 118, 0.3);
+}
+
+.success-checkmark {
+  color: white;
+  font-size: 3rem;
+}
+
+.congrats-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1.75rem;
+  color: #1a1a1a;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.party-emoji {
+  font-size: 1.75rem;
+}
+
+.approval-text {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.approval-highlight {
+  color: #143676;
+  font-weight: 600;
+}
+
+.approved-amount-section {
+  background: linear-gradient(135deg, #143676 0%, #0F2854 100%);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(20, 54, 118, 0.25);
+}
+
+.approved-label {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.75rem;
+}
+
+.approved-amount {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ==================== COMPLIANCE NOTICE ==================== */
+.compliance-notice {
+  background: linear-gradient(135deg, #D3DFF5 0%, #E8EFFD 100%);
+  border: 2px solid #143676;
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(20, 54, 118, 0.15);
+}
+
+.notice-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.warning-icon {
+  color: #143676;
+  font-size: 1.3rem;
+}
+
+.notice-title {
+  color: #143676;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.notice-text {
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.notice-highlight {
+  color: #143676;
+  font-weight: 700;
+}
+
+/* ==================== LOAN DETAILS CARD (Main Status Page) ==================== */
+.loan-details-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  padding: 2rem 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.details-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.details-icon {
+  font-size: 1.5rem;
+}
+
+.details-title {
+  font-size: 1.3rem;
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-icon-wrapper {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #143676 0%, #0F2854 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(20, 54, 118, 0.3);
+}
+
+.detail-icon {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.detail-content {
+  flex: 1;
+}
+
+.detail-label {
+  color: #888;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.detail-value {
+  color: #143676;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* ==================== QUICK ACTIONS (Main Status Page) ==================== */
+.quick-actions-section {
+  margin-bottom: 2rem;
+}
+
+.actions-title {
+  font-size: 1.2rem;
+  color: white;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.action-button {
+  width: 100%;
+  padding: 1.25rem;
+  background: white;
+  color: #143676;
+  border: 2px solid white;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.action-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #143676 0%, #0F2854 100%);
+  color: white;
+}
+
+.action-button:active {
+  transform: translateY(-2px);
+}
+
+.button-icon {
+  font-size: 1.3rem;
+}
+
+/* ==================== NEXT STEPS BOX ==================== */
+.next-steps-box {
+  background: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-top: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.next-steps-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.steps-icon {
+  color: #143676;
+  font-size: 1.1rem;
+}
+
+.steps-title {
+  color: #143676;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.steps-text {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* ==================== RETURN HOME BUTTON ==================== */
+.return-home-button {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  padding: 1.25rem;
+  background: white;
+  color: #143676;
+  border: 2px solid white;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.return-home-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.home-icon {
+  font-size: 1.3rem;
+}
+
+/* ==================== DEPOSIT/WITHDRAW SCREENS ==================== */
+.deposit-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.back-arrow {
+  background: white;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  color: #143676;
+  font-weight: 700;
+}
+
+.back-arrow:hover {
+  transform: translateX(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.deposit-title {
+  font-size: 1.5rem;
+  color: white;
+  font-weight: 700;
+}
+
+.deposit-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  padding: 2.5rem;
+}
+
+/* ==================== USER INFO SECTION ==================== */
+.info-section {
+  margin-bottom: 1.5rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.info-icon {
+  font-size: 1.5rem;
+  padding-top: 0.25rem;
+}
+
+.info-label {
+  color: #888;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.info-value {
+  color: #143676;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* ==================== REQUIRED DEPOSIT BOX ==================== */
+.required-deposit-box {
+  background: linear-gradient(135deg, #143676 0%, #0F2854 100%);
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(20, 54, 118, 0.25);
+}
+
+.deposit-label {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 0.75rem;
+}
+
+.deposit-amount {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ==================== INSTRUCTIONS SECTION ==================== */
+.instructions-section {
+  margin-bottom: 1.5rem;
+}
+
+.instructions-title {
+  font-size: 1.1rem;
+  color: #143676;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.instruction-step {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: flex-start;
+}
+
+.step-number {
+  background: linear-gradient(135deg, #143676 0%, #0F2854 100%);
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(20, 54, 118, 0.3);
+}
+
+.step-text {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  padding-top: 0.3rem;
+}
+
+/* ==================== TIP BOX ==================== */
+.tip-box {
+  background: linear-gradient(135deg, #D3DFF5 0%, #E8EFFD 100%);
+  border: 2px solid #143676;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(20, 54, 118, 0.15);
+}
+
+.tip-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tip-icon {
+  font-size: 1.3rem;
+}
+
+.tip-title {
+  color: #143676;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.tip-text {
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+/* ==================== CONFIRMATION BOX ==================== */
+.confirmation-box {
+  background: linear-gradient(135deg, #e8f5e9 0%, #d7f0da 100%);
+  border: 2px solid #81c784;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(129, 199, 132, 0.2);
+}
+
+.check-icon {
+  color: #4caf50;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.confirmation-text {
+  color: #2e7d32;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* ==================== COMPLETE BUTTON ==================== */
+.complete-button {
+  width: 100%;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #143676 0%, #0F2854 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  box-shadow: 0 6px 20px rgba(20, 54, 118, 0.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.complete-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(20, 54, 118, 0.4);
+}
+
+.complete-button:active {
+  transform: translateY(-2px);
+}
+
+.button-check {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+/* ==================== WARNING POPUP (Withdraw Warning) ==================== */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  backdrop-filter: blur(4px);
+}
+
+.warning-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 20px;
+  padding: 28px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.warning-popup-content {
+  text-align: center;
+}
+
+.warning-icon-container {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(252, 228, 236, 0.4);
+}
+
+.warning-lock-icon {
+  font-size: 36px;
+}
+
+.warning-popup-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #143676;
+  margin-bottom: 12px;
+}
+
+.warning-popup-text {
+  font-size: 15px;
+  color: #6b7280;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.warning-popup-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.warning-cancel-btn {
+  flex: 1;
+  padding: 14px;
+  background-color: #f3f4f6;
+  border: none;
+  border-radius: 12px;
+  color: #374151;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.warning-cancel-btn:hover {
+  background-color: #e5e7eb;
+  transform: translateY(-2px);
+}
+
+.warning-deposit-btn {
+  flex: 1;
+  padding: 14px;
+  background: linear-gradient(135deg, #143676 0%, #0F2854 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(20, 54, 118, 0.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.warning-deposit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(20, 54, 118, 0.4);
+}
+
+/* ==================== LOAN DETAILS MODAL ==================== */
+.loan-details-container {
+  background: linear-gradient(135deg, #143676 0%, #0F2854 100%);
+}
+
+.loan-details-content {
+  max-width: 600px;
+  padding: 20px;
+}
+
+.loan-details-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.loan-details-back-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background-color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  color: #143676;
+  font-weight: 700;
+}
+
+.loan-details-back-btn:hover {
+  transform: translateX(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.loan-details-page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+.loan-details-modal-card {
+  background-color: white;
+  border-radius: 20px;
+  padding: 32px 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.loan-detail-info-item {
+  margin-bottom: 24px;
+}
+
+.loan-detail-info-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.loan-detail-info-icon {
+  font-size: 16px;
+}
+
+.loan-detail-label-text {
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 600;
+  margin: 0;
+}
+
+.loan-detail-info-value {
+  font-size: 18px;
+  color: #143676;
+  font-weight: 600;
+  margin: 0;
+}
+
+.loan-requested-amount-box {
+  background: linear-gradient(135deg, #143676 0%, #0F2854 100%);
+  padding: 24px 20px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 20px rgba(20, 54, 118, 0.25);
+}
+
+.loan-requested-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.loan-requested-label-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.loan-requested-value {
+  font-size: 32px;
+  color: white;
+  font-weight: 800;
+  margin: 0;
+}
+
+.loan-deposit-summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.loan-summary-label {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.loan-summary-value {
+  font-size: 16px;
+  color: #143676;
+  font-weight: 600;
+  margin: 0;
+}
+
+.loan-qualified-badge-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.loan-qualified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.loan-details-tip-box {
+  background: linear-gradient(135deg, #D3DFF5 0%, #E8EFFD 100%);
+  border: 2px solid #143676;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(20, 54, 118, 0.15);
+}
+
+.loan-details-tip-header {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.loan-details-tip-icon {
+  font-size: 18px;
+}
+
+.loan-details-tip-title {
+  font-size: 14px;
+  color: #143676;
+  font-weight: 700;
+  margin: 0;
+}
+
+.loan-details-tip-text {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.loan-details-back-button {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #143676 0%, #0F2854 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(20, 54, 118, 0.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.loan-details-back-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(20, 54, 118, 0.4);
+}
+
+/* ==================== MOBILE RESPONSIVE ==================== */
+@media (max-width: 600px) {
+  .status-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .success-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .congrats-title {
+    font-size: 1.5rem;
+  }
+
+  .approved-amount {
+    font-size: 2rem;
+  }
+
+  .loan-details-card {
+    padding: 1.5rem;
+  }
+
+  .details-title {
+    font-size: 1.1rem;
+  }
+
+  .detail-icon-wrapper {
+    width: 45px;
+    height: 45px;
+  }
+
+  .detail-icon {
+    font-size: 1.3rem;
+  }
+
+  .detail-value {
+    font-size: 1rem;
+  }
+
+  .deposit-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .deposit-title {
+    font-size: 1.3rem;
+  }
+}

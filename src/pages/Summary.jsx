@@ -45,7 +45,7 @@ export default function Summary() {
         </button>
         <div className="logo">
           <div className="logo-circle">
-            <span className="logo-t">t</span>
+            <img src="/vite.svg" alt="Telecel" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
           <span className="logo-telecel">Telecel</span>
         </div>

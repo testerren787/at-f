@@ -132,7 +132,7 @@ export default function Details() {
         </button>
         <div className="logo">
           <div className="logo-circle">
-            <span className="logo-a">A</span>
+            <img src="/vite.svg" alt="Airteltigo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
           <span className="logo-airteltigo">Airteltigo</span>
         </div>
